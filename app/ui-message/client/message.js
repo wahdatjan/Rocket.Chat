@@ -174,8 +174,31 @@ Template.message.helpers({
 		return zoneName;
 	},
 	dateinNextZone(){
-		const { msg } = this;
-		return DateFormat.formatDate(msg.ts);
+			const { msg } = this;
+		console.log("msg ",this.msg.ts);
+		var timeZone = moment.tz.guess();
+		console.log("timezone is ",timeZone);
+		const zoneName = moment.tz(timeZone).zoneName();
+	
+		//console.log(msg.ts.getTime()/1000);
+		if(zoneName==="IST"){
+			//alert("hi");	
+			console.log("msg time in ist is",msg.ts.getTime());
+
+			const etTimeInMs = msg.ts.getTime()-34200000
+			 
+			 
+			 return DateFormat.formatDate(new Date(etTimeInMs));
+		}
+		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
+			const etTimeInMs = msg.ts.getTime()+34200000
+			 
+			 
+			 return DateFormat.formatDate(new Date(etTimeInMs));
+		}
+		else {
+			return "";
+		}
 	},
 	timeInNextZone(){
 		const { msg } = this;
