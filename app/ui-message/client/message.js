@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { Template } from 'meteor/templating';
 import { TAPi18n } from 'meteor/rocketchat:tap-i18n';
-
 import { timeAgo, formatDateAndTime } from '../../lib/client/lib/formatDate';
 import { DateFormat } from '../../lib/client';
 import { renderMessageBody, MessageTypes, MessageAction, call, normalizeThreadMessage } from '../../ui-utils/client';
@@ -17,6 +16,7 @@ import './message.html';
 import './messageThread.html';
 import { AutoTranslate } from '../../autotranslate/client';
 
+var moment = require('moment-timezone');
 const renderBody = (msg, settings) => {
 	const isSystemMessage = MessageTypes.isSystemMessage(msg);
 	const messageType = MessageTypes.getType(msg) || {};
@@ -159,17 +159,68 @@ Template.message.helpers({
 	},
 	time() {
 		const { msg, timeAgo: useTimeAgo } = this;
-
+		console.log("logs this is ",this);
 		return useTimeAgo ? timeAgo(msg.ts) : DateFormat.formatTime(msg.ts);
 	},
 	date() {
 		const { msg } = this;
 		return DateFormat.formatDate(msg.ts);
 	},
+	zoneAbbr(){
+		const { msg} = this;
+		var timeZoneOffset = msg.ts.timeZoneOffset;
+		var timeZone = moment.tz.guess();
+		const zoneName = moment.tz(timeZone).zoneName();
+		return zoneName;
+	},
+	dateinNextZone(){
+		const { msg } = this;
+		return DateFormat.formatDate(msg.ts);
+	},
+	timeInNextZone(){
+		const { msg } = this;
+		console.log("msg ",this.msg.ts);
+		var timeZone = moment.tz.guess();
+		console.log("timezone is ",timeZone);
+		const zoneName = moment.tz(timeZone).zoneName();
+	
+		//console.log(msg.ts.getTime()/1000);
+		if(zoneName==="IST"){
+			//alert("hi");	
+			console.log("msg time in ist is",msg.ts.getTime());
+
+			const etTimeInMs = msg.ts.getTime()-34200000
+			 
+			 
+			 return DateFormat.formatTime(new Date(etTimeInMs));
+		}
+		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
+			const etTimeInMs = msg.ts.getTime()+34200000
+			 
+			 
+			 return DateFormat.formatTime(new Date(etTimeInMs));
+		}
+		else {
+			return "";
+		}
+		
+	},
+	zoneAbbrInNextLabel(){
+		var timeZone = moment.tz.guess();
+		console.log("timezone is ",timeZone);
+		const zoneName = moment.tz(timeZone).zoneName();
+		if(zoneName==="IST"){
+			return "ET"
+		}
+		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
+			return "IST"
+		}
+    return ""
+	},
 	isTemp() {
 		const { msg } = this;
 		if (msg.temp === true) {
-			return 'temp';
+			return 'temp';message-body-wrapper
 		}
 	},
 	threadMessage() {
