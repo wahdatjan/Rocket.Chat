@@ -1,8 +1,10 @@
+
+
 .rc-message-box {
 	position: relative;
 
 	width: 100%;
-	padding: 24px;
+	padding: 14px;
 
 	font-size: var(--message-box-text-size);
 
@@ -10,6 +12,7 @@
 		padding: 24px 12px 12px;
 	}
 
+	
 	&__toolbar-formatting {
 		position: absolute;
 		left: 0;
@@ -39,6 +42,7 @@
 				color: var(--message-box-markdown-hover-color);
 			}
 		}
+		
 
 		&-link {
 			color: currentColor;
@@ -274,6 +278,11 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	&__rc-clock {
+		display: flex;
+		}
+
+      
 }
 
 @media (width <= 500px) {

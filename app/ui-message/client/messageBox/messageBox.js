@@ -210,6 +210,70 @@ Template.messageBox.helpers({
 
 		return !isReadOnly && !isArchived;
 	},
+	clockTimeIST(){
+		var s = 0;
+		var m =0;
+		var h = 0;
+		var  t=0;
+
+		function checkTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+			 }
+		function startTime(){
+
+		
+  var today = new Date();
+  h = today.getHours();
+  m = today.getMinutes();
+  s = today.getSeconds();
+  var AmOrPm = h >= 12 ? 'PM' : 'AM';
+h = (h % 12) || 12;
+  m = checkTime(m);
+  s = checkTime(s);
+
+   t = setTimeout(startTime, 500);
+   Session.set('clockis',h + ":" + m +":" + s + " "+ AmOrPm + " IST");
+   
+}
+
+   startTime();
+   return Session.get('clockis');
+	},
+	clockTimeET(){
+		var s = 0;
+		var m =0;
+		var h = 0;
+		var  t=0;
+
+		function checkTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+			 }
+		function startTime(){
+
+		
+  var today = new Date();
+  const etTimeInMs = today.getTime()-34200000;
+  const timeNowInEst = new Date(etTimeInMs);
+  h = timeNowInEst.getHours();
+  
+  m = timeNowInEst.getMinutes();
+  
+  s = timeNowInEst.getSeconds();
+  
+  var AmOrPm = h >= 12 ? 'PM' : 'AM';
+h = (h % 12) || 12;
+  m = checkTime(m);
+  s = checkTime(s);
+   t = setTimeout(startTime, 500);
+   Session.set('clock',h + ":" + m +":" + s + " "+ AmOrPm + " ET");
+   
+}
+
+   startTime();
+   return Session.get('clock');
+	},
 	popupConfig() {
 		return Template.instance().popupConfig.get();
 	},

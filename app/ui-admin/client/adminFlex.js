@@ -32,6 +32,7 @@ Template.adminFlex.helpers({
 	},
 
 	groups() {
+		
 		const filter = Template.instance().settingsFilter.get();
 		const query = {
 			type: 'group',
@@ -55,6 +56,7 @@ Template.adminFlex.helpers({
 		if (filter && groups.length === 0) {
 			return 0;
 		}
+		console.log("settings",settings.collectionPrivate);
 		return settings.collectionPrivate.find(query).fetch().map(function(el) {
 			el.label = label.apply(el);
 			return el;
@@ -67,12 +69,13 @@ Template.adminFlex.helpers({
 	},
 	label,
 	adminBoxOptions() {
+		console.log("menu",getSidebarItems())
 		return getSidebarItems();
 	},
 	menuItem(name, icon, section, group) {
 		const routeParam = FlowRouter.getParam('group');
 		const routeName = FlowRouter.getRouteName();
-
+		console.log("menuuu",name);
 		return {
 			name: t(name),
 			icon,
