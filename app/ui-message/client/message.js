@@ -239,7 +239,10 @@ Template.message.helpers({
 		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
 			return "IST"
 		}
-    return ""
+		else {
+			return ""
+		}
+  
 	},
 	isTemp() {
 		const { msg } = this;
