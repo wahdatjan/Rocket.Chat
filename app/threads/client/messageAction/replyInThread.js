@@ -8,8 +8,9 @@ import { chatMessages } from '../../../ui/client';
 import { addMessageToList } from '../../../ui-utils/client/lib/MessageAction';
 
 Meteor.startup(function() {
+
 	Tracker.autorun(() => {
-		if (!settings.get('Threads_enabled')) {
+		if (!settings.get('Threads_enabled')) {addMessageToList
 			return MessageAction.removeButton('reply-in-thread');
 		}
 		MessageAction.addButton({

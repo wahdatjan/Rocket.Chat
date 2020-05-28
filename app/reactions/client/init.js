@@ -53,6 +53,8 @@ Template.room.events({
 	},
 });
 
+
+
 Meteor.startup(function() {
 	MessageAction.addButton({
 		id: 'reaction-message',
@@ -66,6 +68,7 @@ Meteor.startup(function() {
 		action(event) {
 			event.stopPropagation();
 			const { msg } = messageArgs(this);
+			console.log("emoji","emoji");
 			EmojiPicker.open(event.currentTarget, (emoji) => Meteor.call('setReaction', `:${ emoji }:`, msg._id));
 		},
 		condition({ msg: message, u: user, room, subscription }) {
@@ -97,3 +100,4 @@ Meteor.startup(function() {
 		group: ['message', 'menu'],
 	});
 });
+

@@ -15,6 +15,7 @@ import { upsertMessage } from '../../ui-utils/client/lib/RoomHistoryManager';
 import './message.html';
 import './messageThread.html';
 import { AutoTranslate } from '../../autotranslate/client';
+import  {addTagMessage}  from '../../ui-utils/client/lib/MessageAction';
 
 var moment = require('moment-timezone');
 const renderBody = (msg, settings) => {
@@ -275,8 +276,15 @@ Template.message.helpers({
 		const { translationProvider } = instance.data.msg;
 		return translationProvider && AutoTranslate.providersMetadata[translationProvider].displayName;
 	},
+	isTagged(){
+		const { msg } = this;
+		const tagMsg = addTagMessage();
+		console.log("istag",tagMsg);
+		return msg && msg;
+	},
 	edited() {
 		const { msg } = this;
+		console.log("editt",msg.editedAt && !MessageTypes.isSystemMessage(msg));
 		return msg.editedAt && !MessageTypes.isSystemMessage(msg);
 	},
 	editTime() {

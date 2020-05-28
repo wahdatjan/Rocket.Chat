@@ -15,6 +15,9 @@ import { Messages, Rooms, Subscriptions } from '../../../models/client';
 import { hasAtLeastOnePermission } from '../../../authorization/client';
 import { modal } from './modal';
 
+import { Mongo } from 'meteor/mongo';
+let tagMsg ;
+
 const call = (method, ...args) => new Promise((resolve, reject) => {
 	Meteor.call(method, ...args, function(err, data) {
 		if (err) {
@@ -24,6 +27,11 @@ const call = (method, ...args) => new Promise((resolve, reject) => {
 	});
 });
 
+
+export const addTagMessage = () => {
+	console.log("taggerex",tagMsg);
+	return tagMsg;
+};
 export const addMessageToList = (messagesList, message) => {
 	// checks if the message is not already on the list
 	if (!messagesList.find(({ _id }) => _id === message._id)) {
@@ -184,7 +192,38 @@ Meteor.startup(async function() {
 		order: 0,
 		group: 'menu',
 	});
+	MessageAction.addButton({
+		id: 'message-tag',
+		icon: 'quote',
+		label: 'TAG MESSAGE',
+		context: ['message', 'message-mobile', 'threads'],
+		action() {
+			const { msg: message } = messageArgs(this);
+			// const { input } = chatMessages[message.rid + (message.tmid ? `-${ message.tmid }` : '')];
+			// const $input = $(input);
 
+
+			// let messages = $input.data('reply') || [];
+		 tagMsg =	message;
+		 console.log("tagger",tagMsg);
+		//	 messages = addMessageToList(messages, message, input);
+
+			// $input
+			// 	.focus()
+			// 	.data('mention-user', false)
+			// 	.data('reply', messages)
+			// 	.trigger('dataChange');
+		},
+		condition({ subscription }) {
+			if (subscription == null) {
+				return false;
+			}
+
+			return true;
+		},
+		order: 3,
+		group: 'menu',
+	});
 	MessageAction.addButton({
 		id: 'quote-message',
 		icon: 'quote',

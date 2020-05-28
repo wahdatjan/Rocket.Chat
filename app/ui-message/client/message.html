@@ -58,6 +58,11 @@
 							<i class="icon-pencil{{#if $neq editedBy msg.u.username}} error-color{{/if}}" aria-label="{{_ "Edited"}}"></i>
 						</span>
 					{{/if}}
+
+					     {{#if isTagged  }}
+						<div class="clockTimeET" style=" color: #000;; font-family: inherit;border-width: 1px;padding: 1px 4px; background: #ffffff;">Tagged</div>	
+						
+					    {{/if}}
 					{{#if msg.alert}}
 						<div aria-label="{{_ msg.alert }}" class="rc-tooltip message-unread"></div>
 					{{/if}}
