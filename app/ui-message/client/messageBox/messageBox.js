@@ -233,7 +233,7 @@ h = (h % 12) || 12;
   s = checkTime(s);
 
    t = setTimeout(startTime, 500);
-   Session.set('clockis',h + ":" + m +":" + s + " "+ AmOrPm + " IST");
+   Session.set('clockis',h + ":" + m + " "+ AmOrPm + " IST");
    
 }
 
@@ -267,7 +267,7 @@ h = (h % 12) || 12;
   m = checkTime(m);
   s = checkTime(s);
    t = setTimeout(startTime, 500);
-   Session.set('clock',h + ":" + m +":" + s + " "+ AmOrPm + " ET");
+   Session.set('clock',h + ":" + m + " "+ AmOrPm + " ET");
    
 }
 
