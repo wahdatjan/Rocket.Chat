@@ -177,24 +177,18 @@ Template.message.helpers({
 			const { msg } = this;
 		console.log("msg ",this.msg.ts);
 		var timeZone = moment.tz.guess();
-		console.log("timezone is ",timeZone);
 		const zoneName = moment.tz(timeZone).zoneName();
 	
-		//console.log(msg.ts.getTime()/1000);
 		if(zoneName==="IST"){
-			//alert("hi");	
-			console.log("msg time in ist is",msg.ts.getTime());
-
-			const etTimeInMs = msg.ts.getTime()-34200000
-			 
-			 
-			 return DateFormat.formatDate(new Date(etTimeInMs));
+			
+			
+			const etDate = moment.tz(msg.ts.getTime(), "America/New_York").format("LL, h:mm A")
+			 return etDate;
 		}
 		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
-			const etTimeInMs = msg.ts.getTime()+34200000
-			 
-			 
-			 return DateFormat.formatDate(new Date(etTimeInMs));
+			const etDate = moment.tz(msg.ts.getTime(), "Asia/Calcutta").format("LL, h:mm A")
+			
+			 return etDate;
 		}
 		else {
 			return "";
@@ -207,21 +201,17 @@ Template.message.helpers({
 		console.log("timezone is ",timeZone);
 		const zoneName = moment.tz(timeZone).zoneName();
 	
-		//console.log(msg.ts.getTime()/1000);
 		if(zoneName==="IST"){
-			//alert("hi");	
 			console.log("msg time in ist is",msg.ts.getTime());
 
-			const etTimeInMs = msg.ts.getTime()-34200000
+			const etTime = moment.tz(msg.ts.getTime(), "America/New_York").format("LT")
 			 
-			 
-			 return DateFormat.formatTime(new Date(etTimeInMs));
+			 return etTime;
 		}
 		else if(zoneName==="ET"||zoneName==="EST"||zoneName==="EDT"){
-			const etTimeInMs = msg.ts.getTime()+34200000
+			const isTime = moment.tz(msg.ts.getTime(), "Asia/Calcutta").format("LT")
 			 
-			 
-			 return DateFormat.formatTime(new Date(etTimeInMs));
+			 return isTime;
 		}
 		else {
 			return "";
