@@ -5,6 +5,8 @@ import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
 import moment from 'moment';
+var momenttz = require('moment-timezone');
+
 
 import { setupAutogrow } from './messageBoxAutogrow';
 import {
@@ -211,66 +213,25 @@ Template.messageBox.helpers({
 		return !isReadOnly && !isArchived;
 	},
 	clockTimeIST(){
-		var s = 0;
-		var m =0;
-		var h = 0;
-		var  t=0;
+				function startTime(){
 
-		function checkTime(i) {
-			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-			return i;
-			 }
-		function startTime(){
-
-		
-  var today = new Date();
-  h = today.getHours();
-  m = today.getMinutes();
-  s = today.getSeconds();
-  var AmOrPm = h >= 12 ? 'PM' : 'AM';
-h = (h % 12) || 12;
-  m = checkTime(m);
-  s = checkTime(s);
-
-   t = setTimeout(startTime, 500);
-   Session.set('clockis',h + ":" + m + " "+ AmOrPm + " IST");
-   
-}
-
-   startTime();
+			var timeNowInIST =   moment().tz("Asia/Calcutta").format("LT");
+					
+		   t = setTimeout(startTime, 500);
+		   Session.set('clockis',timeNowInIST + " IST");
+		}
+		   startTime();
    return Session.get('clockis');
 	},
 	clockTimeET(){
-		var s = 0;
-		var m =0;
-		var h = 0;
-		var  t=0;
-
-		function checkTime(i) {
-			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-			return i;
-			 }
 		function startTime(){
 
-		
-  var today = new Date();
-  const etTimeInMs = today.getTime()-34200000;
-  const timeNowInEst = new Date(etTimeInMs);
-  h = timeNowInEst.getHours();
-  
-  m = timeNowInEst.getMinutes();
-  
-  s = timeNowInEst.getSeconds();
-  
-  var AmOrPm = h >= 12 ? 'PM' : 'AM';
-h = (h % 12) || 12;
-  m = checkTime(m);
-  s = checkTime(s);
+	var timeNowInET =   moment().tz("America/New_York").format("LT");
+			
    t = setTimeout(startTime, 500);
-   Session.set('clock',h + ":" + m + " "+ AmOrPm + " ET");
+   Session.set('clock',timeNowInET+ " ET");
    
 }
-
    startTime();
    return Session.get('clock');
 	},
