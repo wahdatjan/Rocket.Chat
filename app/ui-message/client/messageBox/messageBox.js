@@ -217,7 +217,7 @@ Template.messageBox.helpers({
 
 			var timeNowInIST =   moment().tz("Asia/Calcutta").format("LT");
 					
-		   t = setTimeout(startTime, 500);
+		   setTimeout(startTime, 500);
 		   Session.set('clockis',timeNowInIST + " IST");
 		}
 		   startTime();
@@ -228,7 +228,8 @@ Template.messageBox.helpers({
 
 	var timeNowInET =   moment().tz("America/New_York").format("LT");
 			
-   t = setTimeout(startTime, 500);
+	
+    setTimeout(startTime, 500);
    Session.set('clock',timeNowInET+ " ET");
    
 }
